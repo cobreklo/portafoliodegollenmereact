@@ -1,0 +1,220 @@
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url('/fonts/kJEPBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzBwG-RpA6RzaxHMPdY40KH8nGzv3fzfVJO1Q.woff2') format('woff2');
+  font-display: swap;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-flex;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  color: #FFFFFF !important;
+}
+
+html, body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('/assets/img/longhorn.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    color: #FFFFFF !important;
+    cursor: url('/assets/cursor/winclassic-linux-silver/left_ptr.cur'), auto;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+@media (prefers-reduced-motion) {
+    @view-transition {
+        navigation: none;
+    }
+}
+
+a {
+    color: #7CFC00 !important;
+    cursor: url('/assets/cursor/winclassic-linux-silver/hand.cur'), pointer;
+}
+
+button, .btn, [role="button"] {
+    cursor: url('/assets/cursor/winclassic-linux-silver/hand.cur'), pointer;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a !important;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333333 !important;
+    border-radius: 5px;
+    border: 1px solid #7CFC00 !important;
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6 {
+    background: linear-gradient(to bottom, #3a3a3a 0%, #111111 50%, #000000 51%, #222222 100%) !important;
+    color: #FFFFFF !important;
+    text-shadow: 1px 1px 2px #000000 !important;
+    padding: 5px 10px;
+    border: 1px solid #555 !important;
+    border-top: 1px solid rgba(255,255,255,0.4) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3) !important;
+}
+
+/* Music Layout Styles (Ported from Legacy) */
+.music-layout-wrapper {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.player-visual-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.music-player-container {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: linear-gradient(180deg, rgba(30,30,30,0.8) 0%, rgba(10,10,10,0.95) 100%);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+}
+
+.music-topbar {
+    background: linear-gradient(to bottom, #3a3a3a 0%, #111111 50%, #000000 51%, #222222 100%) !important;
+    border-bottom: 1px solid #7CFC00 !important;
+    border-top: 1px solid rgba(255,255,255,0.4) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px !important;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+}
+
+.music-bottombar {
+    background: linear-gradient(to bottom, #3a3a3a 0%, #111111 50%, #000000 51%, #222222 100%) !important;
+    border-top: 1px solid #7CFC00 !important;
+    border-top: 1px solid rgba(255,255,255,0.4) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px !important;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+}
+
+.music-body {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+}
+
+.playlist-side {
+    width: 320px;
+    flex-shrink: 0;
+    height: 100%;
+    overflow-y: auto;
+    background: rgba(15, 15, 15, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.3);
+}
+
+/* Estilizado del scrollbar de la playlist */
+.playlist-side::-webkit-scrollbar {
+    width: 6px;
+}
+.playlist-side::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+    margin: 10px;
+    border-radius: 10px;
+}
+.playlist-side::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+.playlist-side::-webkit-scrollbar-thumb:hover {
+    background: rgba(124,252,0,0.6);
+}
+
+.music-list-item {
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: #FFFFFF !important;
+    transition: all 0.2s ease;
+    border-radius: 10px !important;
+    width: 100% !important;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.music-list-item:hover {
+    color: #7CFC00 !important;
+    text-shadow: 0 0 8px rgba(124,252,0,0.7) !important;
+    border-color: #7CFC00 !important;
+    box-shadow: inset 0 0 10px rgba(124,252,0,0.4), 0 0 12px rgba(124,252,0,0.3) !important;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1024px) {
+    .music-layout-wrapper {
+        flex-direction: column;
+        height: auto;
+        gap: 20px;
+    }
+    
+    .player-visual-side {
+        width: 100%;
+        aspect-ratio: 16/10;
+        min-height: 400px;
+    }
+
+    .playlist-side {
+        width: 100%;
+        height: 350px;
+    }
+}

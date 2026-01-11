@@ -1,0 +1,61 @@
+.crt-global-overlay{position:fixed;inset:0;width:100vw;height:100vh;z-index:9999;pointer-events:none;mix-blend-mode:normal;animation:flicker 3s steps(24) infinite}
+.crt-global-overlay::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,.24) 50%),linear-gradient(90deg,rgba(255,0,0,.06),rgba(0,255,0,.02),rgba(0,0,255,.06));background-size:100% 2px,2px 100%;opacity:.18}
+.crt-global-overlay::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 180px 80px rgba(0,0,0,.35);opacity:.18}
+@keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:.92}20%,24%,55%{opacity:.95}}
+@media (prefers-reduced-motion: reduce){.crt-global-overlay{animation:none}}
+.glass-panel{filter:saturate(1.5) contrast(1.1) brightness(1.1) blur(.6px)}
+.crt-overlay{position:fixed;inset:0;width:100vw;height:100vh;z-index:9999;pointer-events:none;mix-blend-mode:normal;backdrop-filter:contrast(1.06) saturate(1.04) blur(.4px);animation:flicker 3s steps(24) infinite}
+.crt-overlay::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,.28) 50%),linear-gradient(90deg,rgba(255,0,0,.08),rgba(0,255,0,.03),rgba(0,0,255,.08));background-size:100% 2px,2px 100%;opacity:.22}
+.crt-overlay::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(0,0,0,.35) 100%);opacity:.18}
+@keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:.22}20%,24%,55%{opacity:.32}}
+
+/* GPU Acceleration Optimization */
+.gpu-accelerated {
+    content-visibility: auto; /* No renderiza lo que no se ve */
+    contain-intrinsic-size: 300px; /* Evita saltos de scroll */
+    transform: translateZ(0); /* Fuerza uso de GPU */
+    will-change: transform;
+}
+
+/* Shake/Nudge Animation - Mobile (Default Scale 1) */
+@keyframes nudge {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-5px, -5px); }
+  20% { transform: translate(5px, 5px); }
+  30% { transform: translate(-5px, 5px); }
+  40% { transform: translate(5px, -5px); }
+  50% { transform: translate(-5px, 0); }
+  60% { transform: translate(5px, 0); }
+  70% { transform: translate(0, 5px); }
+  80% { transform: translate(0, -5px); }
+  90% { transform: translate(-2px, 2px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Shake/Nudge Animation - Desktop (Scale 0.92) */
+@keyframes nudge-desktop {
+  0% { transform: scale(0.92) translate(0, 0); }
+  10% { transform: scale(0.92) translate(-5px, -5px); }
+  20% { transform: scale(0.92) translate(5px, 5px); }
+  30% { transform: scale(0.92) translate(-5px, 5px); }
+  40% { transform: scale(0.92) translate(5px, -5px); }
+  50% { transform: scale(0.92) translate(-5px, 0); }
+  60% { transform: scale(0.92) translate(5px, 0); }
+  70% { transform: scale(0.92) translate(0, 5px); }
+  80% { transform: scale(0.92) translate(0, -5px); }
+  90% { transform: scale(0.92) translate(-2px, 2px); }
+  100% { transform: scale(0.92) translate(0, 0); }
+}
+
+.is-nudging {
+  animation: nudge 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+  opacity: 1 !important;
+  border-color: #ff3333 !important; /* Visual feedback for nudge */
+  box-shadow: 0 0 30px rgba(255, 51, 51, 0.5) !important;
+}
+
+@media (min-width: 1024px) {
+    .is-nudging {
+        animation: nudge-desktop 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+    }
+}
