@@ -22,6 +22,13 @@
   color: #FFFFFF !important;
 }
 
+html {
+    font-size: 16px;
+}
+
+/* FASE 2: NORMALIZACIÓN Y ESTRUCTURA */
+/* Eliminamos cualquier zoom global previo para implementar el sistema de Stage/Window */
+
 html, body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('/assets/img/longhorn.jpg');
     background-attachment: fixed;
@@ -55,17 +62,18 @@ button, .btn, [role="button"] {
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
     background: #1a1a1a !important;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #333333 !important;
-    border-radius: 5px;
+    background: #444 !important;
+    border-radius: 3px;
     border: 1px solid #7CFC00 !important;
 }
 

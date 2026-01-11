@@ -107,23 +107,20 @@ const Musica: React.FC = () => {
             <div className="music-body flex items-center justify-center relative p-8">
               {/* CD Animation */}
               {(() => {
-                const hasCover = !!(currentSong?.url_portada || currentSong?.cover);
-                // Si hay cover, usamos la imagen del cover y la rotamos con CSS si está sonando.
-                // Si NO hay cover:
-                //   - Si suena: Usamos el GIF (ya gira solo).
-                //   - Si pausa: Usamos el PNG estático.
-                const imgSrc = hasCover 
-                  ? (currentSong?.url_portada || currentSong?.cover)
-                  : (isPlaying ? '/assets/gifs/cd_spinning.gif' : '/assets/img/cd_stopped.png');
+                const hasUrl = !!(currentSong?.url_portada || currentSong?.cover);
                 
-                // Aplicar rotación CSS SOLO si hay cover y está sonando. 
-                // El GIF ya tiene animación propia.
-                const spinClass = (hasCover && isPlaying) ? 'animate-[spin_4s_linear_infinite]' : '';
-
+                // Determinamos la fuente base: si hay URL, úsala; si no, decide según el estado de reproducción
+                const fallbackSrc = isPlaying ? '/assets/gifs/cd_spinning.gif' : '/assets/img/cd_stopped.png';
+                const imgSrc = hasUrl ? (currentSong?.url_portada || currentSong?.cover) : fallbackSrc;
+                
+                // Rotación CSS solo si es una imagen estática (portada) y está sonando
+                // Si es el GIF, no necesita rotación CSS
+                const needsSpin = hasUrl && isPlaying;
+                
                 return (
                   <div 
                     id="music-cd" 
-                    className={`rounded-full border-4 border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-1000 ${spinClass}`}
+                    className={`rounded-full border-4 border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-1000 ${needsSpin ? 'animate-[spin_4s_linear_infinite]' : ''}`}
                     style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
                   >
                     <div className="w-full h-full bg-black flex items-center justify-center relative">
@@ -132,11 +129,12 @@ const Musica: React.FC = () => {
                         alt="Album Art" 
                         className="absolute inset-0 w-full h-full object-cover opacity-80"
                         onError={(e) => {
-                          // Fallback si falla la carga del cover
-                          e.currentTarget.src = isPlaying ? '/assets/gifs/cd_spinning.gif' : '/assets/img/cd_stopped.png';
-                          // Si hacemos fallback al GIF/PNG, deberíamos quitar la animación CSS, 
-                          // pero React no re-renderiza classes en onError fácilmente sin estado.
-                          // Aceptable para este edge case.
+                          // Si la imagen falla, forzar el fallback inmediatamente
+                          const target = e.currentTarget;
+                          const newSrc = isPlaying ? '/assets/gifs/cd_spinning.gif' : '/assets/img/cd_stopped.png';
+                          if (target.src !== window.location.origin + newSrc) {
+                              target.src = newSrc;
+                          }
                         }}
                       />
                       {/* Center hole decor */}

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { GlassPanel } from './components/ui/GlassPanel';
 import { CRTOverlay } from './components/ui/CRTOverlay';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { useAudio } from './hooks/useAudio';
 
-// Pages - using Default Imports as requested
+// Pages
 import Home from './pages/Home';
 import Reel from './pages/Reel';
 import Videoclips from './pages/Videoclips';
@@ -20,23 +20,17 @@ import Login from './pages/Login';
 
 const AppContent = () => {
   const { playClickSound } = useAudio();
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
 
   // Global click sound effect
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-        // Cast to Element to use closest method safely
         const target = e.target as Element;
-        
-        // Don't play sound if clicking on a link (links might have their own sound or navigation)
-        // Also check if target is valid
         if (target && target.closest && target.closest('a')) return;
-        
         playClickSound();
     };
-    
-    // Use true for capture phase if needed, or bubble. Document click usually works on bubble.
     document.addEventListener('click', handleClick);
-    
     return () => document.removeEventListener('click', handleClick);
   }, [playClickSound]);
 
@@ -45,7 +39,7 @@ const AppContent = () => {
         <Header />
         <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-          <main className="flex-1 p-6 relative overflow-y-auto scrollbar-hide">
+          <main className={`flex-1 relative overflow-y-auto scrollbar-hide ${isAdmin ? 'p-0' : 'p-6'}`}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/reel" element={<Reel />} />
