@@ -5,6 +5,7 @@ import { CRTOverlay } from './components/ui/CRTOverlay';
 import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { useAudio } from './hooks/useAudio';
+import { useFirestoreDoc } from './hooks/useFirestore';
 
 // Pages
 import Home from './pages/Home';
@@ -22,8 +23,12 @@ const AppContent = () => {
   const { playClickSound } = useAudio();
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
+  const isMusic = location.pathname === '/musica';
+  const isFullPage = isAdmin || isMusic;
+  
+  // 1. Cargar fondo dinámico desde Firebase
+  const { data: themeData } = useFirestoreDoc('settings', 'theme');
 
-  // Global click sound effect
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
         const target = e.target as Element;
@@ -35,26 +40,45 @@ const AppContent = () => {
   }, [playClickSound]);
 
   return (
-      <GlassPanel>
-        <Header />
-        <div className="flex flex-1 overflow-hidden">
-        <Sidebar />
-          <main className={`flex-1 relative overflow-y-auto scrollbar-hide ${isAdmin ? 'p-0' : 'p-6'}`}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/reel" element={<Reel />} />
-              <Route path="/videoclips" element={<Videoclips />} />
-              <Route path="/fotografias" element={<Fotografias />} />
-              <Route path="/cortometrajes" element={<Cortometrajes />} />
-              <Route path="/resenas" element={<Resenas />} />
-              <Route path="/musica" element={<Musica />} />
-              <Route path="/contacto" element={<Contacto />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/login" element={<Login />} />
-            </Routes>
-          </main>
-        </div>
-      </GlassPanel>
+    // CONTENEDOR MAESTRO: Ocupa el 100% de #root
+    <div className="relative w-full h-full overflow-hidden">
+      
+      {/* CAPA 1: FONDO DINÁMICO (Z=0) */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-1000 pointer-events-none" 
+        style={{ 
+           // Si hay imagen en BD, la usa. Si no, es transparente y se ve el CSS global (longhorn)
+           backgroundImage: themeData?.backgroundImage 
+             ? `url(${themeData.backgroundImage})` 
+             : undefined
+        }} 
+      />
+
+      {/* CAPA 2: CONTENIDO PRINCIPAL (Z=10) */}
+      <div className="relative z-10 w-full h-full flex flex-col pointer-events-auto">
+         {/* GlassPanel ahora es hijo flex para ocupar el espacio restante */}
+         <GlassPanel className="flex-1 flex flex-col overflow-hidden">
+            <Header />
+            <div className="flex flex-1 overflow-hidden relative">
+               <Sidebar />
+               <main className={`flex-1 relative overflow-y-auto scrollbar-hide ${isFullPage ? 'p-0' : 'p-6'}`}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/reel" element={<Reel />} />
+                    <Route path="/videoclips" element={<Videoclips />} />
+                    <Route path="/fotografias" element={<Fotografias />} />
+                    <Route path="/cortometrajes" element={<Cortometrajes />} />
+                    <Route path="/resenas" element={<Resenas />} />
+                    <Route path="/musica" element={<Musica />} />
+                    <Route path="/contacto" element={<Contacto />} />
+                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/login" element={<Login />} />
+                  </Routes>
+               </main>
+            </div>
+         </GlassPanel>
+      </div>
+    </div>
   );
 }
 

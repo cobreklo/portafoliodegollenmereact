@@ -14,6 +14,7 @@ import { ReelSection } from '../components/admin/sections/ReelSection';
 import { ShortsSection } from '../components/admin/sections/ShortsSection';
 import { AlbumSection } from '../components/admin/sections/AlbumSection';
 import { ReviewSection } from '../components/admin/sections/ReviewSection';
+import { BackgroundSection } from '../components/admin/sections/BackgroundSection';
 
 declare global {
   interface Window {
@@ -163,6 +164,12 @@ export default function Admin() {
           {currentTab === 'albumes' && (
             <SectionContainer title="Álbumes" icon="📷">
               <AlbumSection openWidget={openWidget} />
+            </SectionContainer>
+          )}
+
+          {currentTab === 'background' && (
+            <SectionContainer title="Personalización de Fondo" icon="🖼️">
+              <BackgroundSection openWidget={openWidget} />
             </SectionContainer>
           )}
         </div>

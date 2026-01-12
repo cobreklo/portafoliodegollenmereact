@@ -5,3 +5,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* === REGLA MAESTRA (NUCLEAR FIX) === */
+/* Fuerza a la aplicación a ocupar toda la pantalla */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Evita scrolls dobles */
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}

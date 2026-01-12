@@ -23,6 +23,7 @@ export function AdminLayout({ children, onLogout }: AdminLayoutProps) {
     { tab: "reel", icon: Layout, label: "Reel" },
     { tab: "cortos", icon: Film, label: "Cortos" },
     { tab: "albumes", icon: Image, label: "Álbumes" },
+    { tab: "background", icon: Image, label: "Fondos" },
   ];
 
   return (
