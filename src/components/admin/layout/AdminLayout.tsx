@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useSearchParams, NavLink } from 'react-router-dom';
+import { useSearchParams, NavLink, Link } from 'react-router-dom';
 import { 
   Home, Video, Music, Film, MessageSquare, 
-  Layout, Image, Menu, X
+  Layout, Image, Menu, X, ArrowLeft
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -26,7 +26,7 @@ export function AdminLayout({ children, onLogout }: AdminLayoutProps) {
   ];
 
   return (
-    <div id="admin-stage" className="fixed inset-0 bg-black overflow-hidden flex items-center justify-center">
+    <div className="fixed inset-0 bg-black overflow-hidden flex items-center justify-center z-[9999]">
       <div 
         id="admin-window"
         className="relative origin-center bg-black text-white p-2 font-sans selection:bg-blue-500/30 text-xs md:text-sm overflow-hidden flex flex-col shadow-2xl"
@@ -75,6 +75,14 @@ export function AdminLayout({ children, onLogout }: AdminLayoutProps) {
                 ))}
 
                 <div className="mt-auto pt-2 border-t border-white/10 pb-4">
+                    <Link 
+                        to="/"
+                        className="w-full flex items-center gap-2 px-3 py-3 rounded text-sm font-bold text-gray-400 hover:bg-white/10 hover:text-white transition-colors mb-2"
+                    >
+                        <ArrowLeft size={16} />
+                        <span>Volver al Inicio</span>
+                    </Link>
+
                     <button 
                         onClick={onLogout}
                         className="w-full flex items-center gap-2 px-3 py-3 rounded text-sm font-bold text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"

@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { collection, query, orderBy, onSnapshot, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../../services/firebase';
 
+const EMOJI_MAP: Record<number, { src: string }> = {
+    1: { src: '/assets/emojis/angry-smile.png' },
+    2: { src: '/assets/emojis/sad-smile.png' },
+    3: { src: '/assets/emojis/smile.png' },
+    4: { src: '/assets/emojis/open-mouthed-smile.png' },
+    5: { src: '/assets/emojis/hot-smile.png' },
+};
+
 export function ReviewSection() {
     const [reviews, setReviews] = useState<any[]>([]);
 
@@ -28,35 +36,46 @@ export function ReviewSection() {
 
     return (
         <div className="grid gap-2 pr-2">
-            {reviews.map(r => (
-                <div key={r.id} className={`p-2 rounded border transition-all ${r.aprobado ? 'border-green-500/30 bg-green-500/5' : 'border-yellow-500/30 bg-yellow-500/5'}`}>
-                    <div className="flex justify-between items-start mb-1">
-                        <div className="min-w-0 flex-1 mr-2">
-                            <h4 className="font-bold flex items-center gap-2 text-xs text-white truncate">
-                                {r.nombre || 'Anónimo'} 
-                                {r.verificado && <span className="text-[9px] text-blue-400 border border-blue-400 rounded px-1 uppercase tracking-wider flex-shrink-0">Verificado</span>}
-                            </h4>
-                            <p className="text-[9px] text-gray-400">{r.fecha?.seconds ? new Date(r.fecha.seconds * 1000).toLocaleDateString() : 'Sin fecha'}</p>
+            {reviews.map(r => {
+                 const score = r.puntuacion || 3;
+                 const emojiSrc = EMOJI_MAP[score]?.src || EMOJI_MAP[3].src;
+                 
+                 return (
+                    <div key={r.id} className={`p-2 rounded border transition-all ${r.aprobado ? 'border-green-500/30 bg-green-500/5' : 'border-yellow-500/30 bg-yellow-500/5'}`}>
+                        <div className="flex justify-between items-start mb-1">
+                            <div className="min-w-0 flex-1 mr-2 flex gap-3">
+                                {/* Emoji Preview in Admin */}
+                                <div className="w-8 h-8 flex-shrink-0 bg-black/30 rounded-full flex items-center justify-center">
+                                     <img src={emojiSrc} alt="mood" className="w-6 h-6 object-contain" />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold flex items-center gap-2 text-xs text-white truncate">
+                                        {r.nombre || 'Anónimo'} 
+                                        {r.verificado && <span className="material-symbols-outlined text-blue-400 text-[14px]">verified</span>}
+                                    </h4>
+                                    <p className="text-[9px] text-gray-400">{r.fecha?.seconds ? new Date(r.fecha.seconds * 1000).toLocaleDateString() : 'Sin fecha'}</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-1 flex-shrink-0">
+                                <button 
+                                    onClick={() => toggleVerify(r)} 
+                                    className={`text-[9px] border px-2 py-0.5 rounded transition-colors whitespace-nowrap ${r.verificado ? 'border-blue-500 text-blue-400 bg-blue-500/10' : 'border-gray-600 text-gray-500 hover:border-blue-500 hover:text-blue-400'}`}
+                                >
+                                    {r.verificado ? 'OK' : 'Verif.'}
+                                </button>
+                                <button 
+                                    onClick={() => toggleApprove(r)} 
+                                    className={`text-[9px] border px-2 py-0.5 rounded transition-colors whitespace-nowrap ${r.aprobado ? 'border-green-500 text-green-400 bg-green-500/10' : 'border-yellow-500 text-yellow-400 hover:bg-yellow-500/10'}`}
+                                >
+                                    {r.aprobado ? 'Vis.' : 'Ocu.'}
+                                </button>
+                                <button onClick={() => deleteReview(r.id)} className="text-[9px] border border-red-500 text-red-400 px-2 py-0.5 rounded hover:bg-red-500/10">X</button>
+                            </div>
                         </div>
-                        <div className="flex gap-1 flex-shrink-0">
-                            <button 
-                                onClick={() => toggleVerify(r)} 
-                                className={`text-[9px] border px-2 py-0.5 rounded transition-colors whitespace-nowrap ${r.verificado ? 'border-blue-500 text-blue-400 bg-blue-500/10' : 'border-gray-600 text-gray-500 hover:border-blue-500 hover:text-blue-400'}`}
-                            >
-                                {r.verificado ? 'OK' : 'Verif.'}
-                            </button>
-                            <button 
-                                onClick={() => toggleApprove(r)} 
-                                className={`text-[9px] border px-2 py-0.5 rounded transition-colors whitespace-nowrap ${r.aprobado ? 'border-green-500 text-green-400 bg-green-500/10' : 'border-yellow-500 text-yellow-400 hover:bg-yellow-500/10'}`}
-                            >
-                                {r.aprobado ? 'Vis.' : 'Ocu.'}
-                            </button>
-                            <button onClick={() => deleteReview(r.id)} className="text-[9px] border border-red-500 text-red-400 px-2 py-0.5 rounded hover:bg-red-500/10">X</button>
-                        </div>
+                        <p className="italic text-[11px] text-gray-300 bg-black/20 p-1.5 rounded line-clamp-2 hover:line-clamp-none transition-all">"{r.mensaje}"</p>
                     </div>
-                    <p className="italic text-[11px] text-gray-300 bg-black/20 p-1.5 rounded line-clamp-2 hover:line-clamp-none transition-all">"{r.mensaje}"</p>
-                </div>
-            ))}
+                );
+            })}
             {reviews.length === 0 && <div className="text-center text-gray-500 text-xs py-4">No hay reseñas.</div>}
         </div>
     );

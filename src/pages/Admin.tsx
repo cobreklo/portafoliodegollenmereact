@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth } from '../services/firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { GlassPanel } from '../components/ui/GlassPanel';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 
 // Componentes Refactorizados
 import { AdminLayout } from '../components/Admin/layout/AdminLayout';
@@ -111,6 +111,10 @@ export default function Admin() {
             <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
               Ingresar
             </button>
+            
+            <Link to="/" className="block w-full text-center bg-white/5 hover:bg-white/10 text-gray-300 font-bold py-2 px-4 rounded transition border border-white/10">
+              Volver al Inicio
+            </Link>
           </form>
         </GlassPanel>
       </div>
