@@ -5,15 +5,15 @@ import { GlassPanel } from '../components/ui/GlassPanel';
 import { useSearchParams, Link } from 'react-router-dom';
 
 // Componentes Refactorizados
-import { AdminLayout } from '../components/Admin/layout/AdminLayout';
-import { SectionContainer } from '../components/Admin/ui/SectionContainer';
-import { MusicSection } from '../components/Admin/sections/MusicSection';
-import { VideoSection } from '../components/Admin/sections/VideoSection';
-import { ProfileSection } from '../components/Admin/sections/ProfileSection';
-import { ReelSection } from '../components/Admin/sections/ReelSection';
-import { ShortsSection } from '../components/Admin/sections/ShortsSection';
-import { AlbumSection } from '../components/Admin/sections/AlbumSection';
-import { ReviewSection } from '../components/Admin/sections/ReviewSection';
+import { AdminLayout } from '../components/admin/layout/AdminLayout';
+import { SectionContainer } from '../components/admin/ui/SectionContainer';
+import { MusicSection } from '../components/admin/sections/MusicSection';
+import { VideoSection } from '../components/admin/sections/VideoSection';
+import { ProfileSection } from '../components/admin/sections/ProfileSection';
+import { ReelSection } from '../components/admin/sections/ReelSection';
+import { ShortsSection } from '../components/admin/sections/ShortsSection';
+import { AlbumSection } from '../components/admin/sections/AlbumSection';
+import { ReviewSection } from '../components/admin/sections/ReviewSection';
 
 declare global {
   interface Window {
