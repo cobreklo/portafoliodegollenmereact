@@ -19,14 +19,14 @@ const Contacto: React.FC = () => {
         
         {/* Email Card */}
         <a 
-          href="mailto:hugojaque@gmail.com" 
+          href="mailto:degollenme@gmail.com" 
           className="group flex flex-col items-center justify-center p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(13,242,242,0.15)] transition-all duration-300"
         >
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-white/10 to-transparent border border-white/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
             <Mail className="text-primary w-8 h-8" />
           </div>
           <h3 className="text-xl font-bold text-white mb-2">Correo Electrónico</h3>
-          <span className="text-white/60 text-sm group-hover:text-primary transition-colors">hugojaque@gmail.com</span>
+          <span className="text-white/60 text-sm group-hover:text-primary transition-colors">degollenme@gmail.com</span>
         </a>
 
         {/* Instagram Card */}
