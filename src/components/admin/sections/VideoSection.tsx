@@ -5,12 +5,17 @@ import { db } from '../../../services/firebase';
 interface VideoItem {
   titulo: string;
   url: string;
+  thumbnail?: string;
   fecha?: string;
 }
 
-export function VideoSection() {
+interface VideoSectionProps {
+  openWidget: (resourceType: 'image' | 'video', callback: (url: string) => void, multiple?: boolean) => void;
+}
+
+export function VideoSection({ openWidget }: VideoSectionProps) {
   const [videos, setVideos] = useState<VideoItem[]>([]);
-  const [form, setForm] = useState<VideoItem>({ titulo: '', url: '' });
+  const [form, setForm] = useState<VideoItem>({ titulo: '', url: '', thumbnail: '' });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -28,7 +33,7 @@ export function VideoSection() {
       await setDoc(doc(db, 'contenido', 'videos'), {
         items: arrayUnion({ ...form, fecha: new Date().toISOString() })
       }, { merge: true });
-      setForm({ titulo: '', url: '' });
+      setForm({ titulo: '', url: '', thumbnail: '' });
     } catch (error) {
       console.error("Error saving video:", error);
       alert("Error al guardar el video");
@@ -67,6 +72,23 @@ export function VideoSection() {
                 value={form.url} 
                 onChange={e => setForm({...form, url: e.target.value})} 
             />
+            
+            <div className="flex gap-2">
+                <input 
+                    placeholder="URL Miniatura (Opcional)" 
+                    className="flex-1 bg-black/30 border border-gray-600 rounded px-2 h-7 text-white focus:border-red-500 outline-none transition-colors placeholder:text-gray-500" 
+                    value={form.thumbnail || ''} 
+                    onChange={e => setForm({...form, thumbnail: e.target.value})} 
+                />
+                <button 
+                    type="button"
+                    onClick={() => openWidget('image', (url) => setForm({...form, thumbnail: url}))}
+                    className="bg-white/10 hover:bg-white/20 text-white px-3 rounded h-7 text-xs border border-white/10"
+                >
+                    Subir
+                </button>
+            </div>
+
             <button 
                 type="submit" 
                 disabled={loading}

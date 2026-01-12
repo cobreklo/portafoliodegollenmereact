@@ -4,10 +4,11 @@ import { Play } from 'lucide-react';
 interface VideoCardProps {
   title: string;
   videoUrl: string;
+  thumbnail?: string;
   type: 'youtube' | 'vimeo';
 }
 
-export const VideoCard: React.FC<VideoCardProps> = ({ title, videoUrl, type }) => {
+export const VideoCard: React.FC<VideoCardProps> = ({ title, videoUrl, thumbnail, type }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const getEmbedUrl = (url: string, type: string) => {
@@ -21,9 +22,11 @@ export const VideoCard: React.FC<VideoCardProps> = ({ title, videoUrl, type }) =
     return url;
   };
 
-  const getThumbnailUrl = (url: string, type: string) => {
+  const getThumbnailUrl = () => {
+    if (thumbnail) return thumbnail;
+    
     if (type === 'youtube') {
-      const videoId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
+      const videoId = videoUrl.split('v=')[1]?.split('&')[0] || videoUrl.split('/').pop();
       return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
     }
     return '/assets/img/longhorn.jpg'; // Fallback
@@ -37,7 +40,7 @@ export const VideoCard: React.FC<VideoCardProps> = ({ title, videoUrl, type }) =
           onClick={() => setIsPlaying(true)}
         >
           <img 
-            src={getThumbnailUrl(videoUrl, type)} 
+            src={getThumbnailUrl()} 
             alt={title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100"
             loading="lazy"

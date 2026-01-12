@@ -30,6 +30,7 @@ const Videoclips: React.FC = () => {
             key={index}
             title={video.titulo}
             videoUrl={video.url}
+            thumbnail={video.thumbnail}
             type={video.tipo || 'youtube'}
           />
         ))}

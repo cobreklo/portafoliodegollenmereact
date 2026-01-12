@@ -144,7 +144,7 @@ export default function Admin() {
 
           {currentTab === 'videos' && (
             <SectionContainer title="Videoclips" icon="🎬">
-              <VideoSection />
+              <VideoSection openWidget={openWidget} />
             </SectionContainer>
           )}
 

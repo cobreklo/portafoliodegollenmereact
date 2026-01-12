@@ -1,13 +1,32 @@
-.crt-global-overlay{position:fixed;inset:0;width:100vw;height:100vh;z-index:9999;pointer-events:none;mix-blend-mode:normal;animation:flicker 3s steps(24) infinite}
-.crt-global-overlay::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,.24) 50%),linear-gradient(90deg,rgba(255,0,0,.06),rgba(0,255,0,.02),rgba(0,0,255,.06));background-size:100% 2px,2px 100%;opacity:.18}
-.crt-global-overlay::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 180px 80px rgba(0,0,0,.35);opacity:.18}
-@keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:.92}20%,24%,55%{opacity:.95}}
-@media (prefers-reduced-motion: reduce){.crt-global-overlay{animation:none}}
-.glass-panel{filter:saturate(1.5) contrast(1.1) brightness(1.1) blur(.6px)}
-.crt-overlay{position:fixed;inset:0;width:100vw;height:100vh;z-index:9999;pointer-events:none;mix-blend-mode:normal;backdrop-filter:contrast(1.06) saturate(1.04) blur(.4px);animation:flicker 3s steps(24) infinite}
-.crt-overlay::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,.28) 50%),linear-gradient(90deg,rgba(255,0,0,.08),rgba(0,255,0,.03),rgba(0,0,255,.08));background-size:100% 2px,2px 100%;opacity:.22}
-.crt-overlay::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(0,0,0,.35) 100%);opacity:.18}
-@keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:.22}20%,24%,55%{opacity:.32}}
+.crt-global-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    pointer-events: none;
+    background: linear-gradient(0deg, rgba(0,0,0,0.10) 0px, rgba(0,0,0,0.10) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 3px);
+    background-size: 3px 3px;
+    animation: crtFlicker 2.5s infinite;
+    will-change: opacity, filter;
+}
+
+@keyframes crtFlicker {
+    0% { opacity: 1; }
+    10% { opacity: 0.98; }
+    20% { opacity: 1; }
+    30% { opacity: 0.99; }
+    40% { opacity: 1; }
+    50% { opacity: 0.97; }
+    60% { opacity: 1; }
+    70% { opacity: 0.99; }
+    80% { opacity: 1; }
+    90% { opacity: 0.98; }
+    100% { opacity: 1; }
+}
+
+.crt-body-filter {
+    filter: saturate(1.2) contrast(1.1);
+}
+
 
 /* GPU Acceleration Optimization */
 .gpu-accelerated {
