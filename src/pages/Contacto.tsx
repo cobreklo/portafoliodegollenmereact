@@ -48,7 +48,7 @@ const Contacto: React.FC = () => {
 
         {/* WhatsApp Card (Optional) */}
         <a 
-          href="https://wa.me/56912345678" // Replace with real number if available
+          href="https://wa.me/56962362384" // Replace with real number if available
           target="_blank" 
           rel="noopener noreferrer"
           className="group flex flex-col items-center justify-center p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-green-500/50 hover:shadow-[0_0_20px_rgba(34,197,94,0.15)] transition-all duration-300 md:col-span-2"
