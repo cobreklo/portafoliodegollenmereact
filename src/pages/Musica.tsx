@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useFirestoreDoc } from '../hooks/useFirestore';
+import { useNavigate } from 'react-router-dom';
 import { LoadingSpinner } from '../components/ui/LoadingSpinner';
 import { ErrorMessage } from '../components/ui/ErrorMessage';
 import { Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, Volume2, Volume1, VolumeX, ListMusic } from 'lucide-react';
 
 const Musica: React.FC = () => {
+  const navigate = useNavigate();
   const { data, loading, error } = useFirestoreDoc('contenido', 'musica');
   const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -100,13 +102,13 @@ const Musica: React.FC = () => {
                    </div>
                    <div className="flex items-center gap-2">
                        <button 
-                         id="admin-access-btn"
-                         className="w-6 h-6 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white text-[10px] font-bold rounded-full border border-white/10 transition-colors"
-                         title="Minimizar"
-                         onClick={() => window.location.href = '/admin'}
-                       >
-                         _
-                       </button>
+                        id="admin-access-btn"
+                        className="w-6 h-6 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white text-[10px] font-bold rounded-full border border-white/10 transition-colors"
+                        title="Minimizar"
+                        onClick={() => navigate('/admin')}
+                      >
+                        _
+                      </button>
                        <button className="w-6 h-6 flex items-center justify-center bg-white/10 hover:bg-red-500/80 hover:border-red-500 text-white text-[10px] rounded-full border border-white/10 transition-colors">✕</button>
                    </div>
                </div>
